@@ -1,4 +1,4 @@
-cabal-version:      3.0
+cabal-version:      2.4
 category:           Benchmarks
 build-type:         Simple
 name:               CharBenchmark
@@ -6,12 +6,18 @@ synopsis:           Testing performance of character encodings
 version:            0.1.0
 
 executable CharBenchmark
---  c-sources: simd.c
---
---  include-dirs: c-code
+  c-sources: c-code/simd.c
+
+  include-dirs: c-code
 
   main-is:
     Char_Bench.hs
+
+  other-modules:
+    Fitch128
+
+  cc-options:
+    -msse4.1
 
   ghc-options:
     -threaded
@@ -23,12 +29,16 @@ executable CharBenchmark
     -optc-ffast-math
     -fspecialize-aggressively
     -Wall
+    -ddump-simpl-stats
+    -ddump-to-file
+    -ddump-file-prefix=HELLO1
 
   hs-source-dirs:
     .
 
   build-depends:
       base
+    , bytestring
     , criterion
     , vector
         ^>= 0.12.1.2
