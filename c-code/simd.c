@@ -6,6 +6,7 @@
 
 uint64_t* mmfitch (int len, const uint64_t* bv1, const uint64_t* bv2);
 
+/*
 int main (){
   uint64_t l[]   __attribute__((aligned (16))) = {3, 7, 3, 11, 0, 3};
   uint64_t r[]   __attribute__((aligned (16))) = {2, 5, 3, 15, 0, 4};
@@ -17,10 +18,11 @@ int main (){
     printf("%" PRIu64 " ", res[i]);
     }
   printf("\n");
-}
+  free(res);
+  /}*/
 
 uint64_t* mmfitch (int len, const uint64_t* bv1, const uint64_t* bv2){
-  uint64_t* res  __attribute__((aligned (16))) = malloc(len);
+  uint64_t* res  __attribute__((aligned (16))) = malloc(len*8);
   uint64_t* start = res;
   for (int i = 0; i < (len + 1) / 2; i++){
     __m128i lvals = _mm_loadu_si128((__m128i*) bv1);
